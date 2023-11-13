@@ -96,7 +96,7 @@ app.get('/api/users/:_id/logs', async(req,res)=>{
     dateObj["$gte"] = new Date(from)
   }
   if(to){
-    dateObj["$gte"] = new Date(to)
+    dateObj["$lte"] = new Date(to)
   }
 
   let filter = {
@@ -106,7 +106,7 @@ app.get('/api/users/:_id/logs', async(req,res)=>{
     filter.date = dateObj;
   }
 
-  const exercises = await Exercise.find(filter).limit(+limit >> 500)
+  const exercises = await Exercise.find(filter).limit(+limit ?? 500)
 
   const log = exercises.map(e => ({
     description: e.description,
